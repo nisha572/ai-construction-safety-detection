@@ -11,6 +11,11 @@ Every run produces an annotated H.264 video, per-incident clips, a structured
 `events.json`, a one-page PDF safety report, and a Streamlit dashboard to
 review it all.
 
+![Two-zone live detection](docs/dashboard-live-two-zone.jpg)
+
+*Two cameras analysed simultaneously. Zone 1 flags danger-zone intrusions,
+Zone 2 flags a worker with no helmet and unsafe proximity to a truck at 3.9 m.*
+
 ```
 video / RTSP / webcam
         │
@@ -32,6 +37,7 @@ video / RTSP / webcam
 
 ## Table of contents
 
+- [Screenshots](#screenshots)
 - [What it detects](#what-it-detects)
 - [Measured accuracy](#measured-accuracy)
 - [Install](#install)
@@ -47,6 +53,58 @@ video / RTSP / webcam
 - [Project layout](#project-layout)
 - [Roadmap](#roadmap)
 - [Licence](#licence)
+
+---
+
+## Screenshots
+
+### Dashboard
+
+The Streamlit console (`streamlit run dashboard/app.py`) is the main way to
+drive a run and review the result.
+
+**Overview** — headline counts, alerts over time, and incidents by type, with
+the result tabs along the bottom.
+
+![Dashboard overview](docs/dashboard-overview.png)
+
+**Session report** — compliance rates, the longest sustained violations, and
+the session split into clock-time shifts.
+
+![Session report](docs/dashboard-session-report.png)
+
+**Person history** — per-worker timeline. Each block is one processed frame:
+green worn / red missing for PPE, with pose and activity tracks below. The red
+run at the start of this worker's vest track is exactly the kind of real
+violation the old thresholds hid.
+
+![Person history](docs/dashboard-person-history.png)
+
+**Worker presence heatmap** — where workers spent their time, accumulated from
+every tracked person-box in the run.
+
+![Worker presence heatmap](docs/dashboard-heatmap.jpg)
+
+### CLI
+
+```console
+$ python pipeline.py --video input/videos/construction.mp4 --stride 5
+incidents: {'danger_zone': 11, 'no_vest': 1}
+saved: output/demo_annotated.mp4 output/events.json
+```
+
+The annotated video each run writes:
+
+![Annotated output, concrete pour](docs/cli-annotated-construction.jpg)
+
+*Nine tracked workers. Labels carry worker id, activity and PPE marks — `H V`
+is helmet plus vest, `H` alone is a worker with no vest detected.*
+
+![Annotated output, truck clip](docs/cli-annotated-truck.jpg)
+
+*The truck is detected and drawn, driving the `UNSAFE PROXIMITY - truck 2.8m`
+alert in the banner. Before the fixes described below, no machinery was
+detected on this clip at all.*
 
 ---
 

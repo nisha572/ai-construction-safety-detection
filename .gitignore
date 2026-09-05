@@ -23,3 +23,6 @@ runs/
 
 # macOS
 .DS_Store
+
+# screenshot originals (processed copies live in docs/)
+photos/
