@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+venv.broken/
+env/
+
+# Model weights — 1.1 GB in total and three files exceed GitHub's 100 MB
+# limit (mobileclip_blt.ts 572 MB, weights/clip/ViT-B-32.pt 338 MB,
+# models/yolov8x-worldv2.pt 140 MB). Distributed separately; see README.
+models/
+weights/
+*.pt
+*.onnx
+*.ts
+
+# Sample footage and everything a run produces
+input/videos/
+output/
+runs/
+
+# macOS
+.DS_Store

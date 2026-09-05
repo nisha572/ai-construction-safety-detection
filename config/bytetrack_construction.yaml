@@ -1,0 +1,12 @@
+# ByteTrack tuned for construction-site worker tracking:
+# - track_buffer high: keep lost tracks ~1.5s so the same worker keeps their ID
+#   through brief occlusion instead of getting a new one
+# - new_track_thresh high: flickery low-conf detections don't spawn new IDs
+# - match_thresh lenient: tolerate fast motion between associations
+tracker_type: bytetrack
+track_high_thresh: 0.3
+track_low_thresh: 0.1
+new_track_thresh: 0.5
+track_buffer: 150
+match_thresh: 0.85
+fuse_score: true

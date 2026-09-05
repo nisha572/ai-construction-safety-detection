@@ -1,0 +1,16 @@
+# BoT-SORT with ReID for construction-site worker tracking.
+# Same motion tuning as bytetrack_construction.yaml, plus:
+# - with_reid + model=auto: appearance embeddings from the detector backbone
+# - gmc sparseOptFlow: global motion compensation for camera shake/pan
+tracker_type: botsort
+track_high_thresh: 0.3
+track_low_thresh: 0.1
+new_track_thresh: 0.5
+track_buffer: 150
+match_thresh: 0.85
+fuse_score: true
+gmc_method: sparseOptFlow
+proximity_thresh: 0.5
+appearance_thresh: 0.8
+with_reid: true
+model: auto

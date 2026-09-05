@@ -1,0 +1,17 @@
+# PPEDemo — pinned to the versions the demo was verified with (Python 3.11).
+# Reinstall with:  pip install -r requirements.txt
+ultralytics==8.4.127
+torch==2.13.0
+torchvision==0.28.0
+opencv-python==5.0.0.93
+numpy==2.4.6
+pandas==3.0.5
+onnxruntime==1.29.0
+onnx==1.22.0          # required to load yolo26n-reid.onnx; ultralytics
+                      # otherwise pip-installs it mid-run on first use
+streamlit==1.62.0
+streamlit-image-coordinates==0.4.1
+imageio-ffmpeg==0.6.0
+fpdf2==2.8.8
+ftfy==6.3.1          # text-prompt tokenisation for YOLOE open-vocab classes
+pytest==9.1.1        # dev: run the offline test suite
