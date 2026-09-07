@@ -299,10 +299,29 @@ with st.container(horizontal=True):
     st.badge("Crop-based PPE", icon=":material/content_cut:", color="primary")
     st.badge("Temporal fall check", icon=":material/schedule:", color="green")
 
-videos = sorted((ROOT / "input" / "videos").glob("*.mp4"),
+VIDEO_DIR = ROOT / "input" / "videos"
+VIDEO_DIR.mkdir(parents=True, exist_ok=True)
+
+# Upload path. input/videos/ can legitimately be empty -- the sample clips are
+# not committed (licence-restricted stock, or real site recordings), so without
+# this the picker had nothing to list and the page stopped dead.
+with st.sidebar:
+    up = st.file_uploader("Add a video", type=["mp4", "mov", "avi"],
+                          accept_multiple_files=True,
+                          help="Uploaded clips are saved to input/videos/ "
+                               "and appear in the pickers below.")
+    for f in up or []:
+        dest = VIDEO_DIR / Path(f.name).name
+        if not dest.exists():
+            dest.write_bytes(f.getbuffer())
+            st.success(f"Added {dest.name}")
+
+videos = sorted([p for ext in ("*.mp4", "*.mov", "*.avi")
+                 for p in VIDEO_DIR.glob(ext)],
                 key=lambda p: p.stat().st_mtime, reverse=True)  # newest first
 if not videos:
-    st.error("Put a video in input/videos/ first.")
+    st.info("Upload a video in the sidebar to get started, or drop one into "
+            "`input/videos/`.")
     st.stop()
 
 

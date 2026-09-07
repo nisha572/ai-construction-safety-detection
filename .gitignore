@@ -26,3 +26,9 @@ runs/
 
 # screenshot originals (processed copies live in docs/)
 photos/
+
+# local-only, not part of the published project
+Dockerfile
+.dockerignore
+deploy/
+demo/
